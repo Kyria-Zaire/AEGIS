@@ -10,6 +10,7 @@ export default defineConfig({
   schema: "prisma/schema.prisma",
   migrations: {
     path: "prisma/migrations",
+    seed: "tsx prisma/seed.ts",
   },
   datasource: {
     // `prisma generate` doesn't need a connection; migrate/studio fail loudly if this is empty.
