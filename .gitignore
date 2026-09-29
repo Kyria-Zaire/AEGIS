@@ -33,3 +33,10 @@ Thumbs.db
 .vscode/*
 !.vscode/extensions.json
 *.log
+
+# Secrets locaux (GitHub App private key, tokens)
+.secrets/
+*.pem
+.env
+.env.local
+.env.*.local
