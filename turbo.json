@@ -6,7 +6,7 @@
   "globalEnv": ["NODE_ENV"],
   "tasks": {
     "db:generate": {
-      "inputs": ["prisma/**", "prisma.config.ts"],
+      "inputs": ["prisma/schema.prisma", "prisma.config.ts"],
       "outputs": ["src/generated/**"]
     },
     "build": {
@@ -23,6 +23,11 @@
     "test": {
       "dependsOn": ["^db:generate", "db:generate"],
       "outputs": ["coverage/**"]
+    },
+    "test:integration": {
+      "dependsOn": ["^db:generate", "db:generate"],
+      "env": ["DATABASE_URL"],
+      "cache": false
     },
     "dev": {
       "dependsOn": ["^db:generate", "db:generate"],
