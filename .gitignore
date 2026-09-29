@@ -1,0 +1,35 @@
+# deps
+node_modules/
+.pnpm-store/
+
+# build / cache
+.next/
+out/
+dist/
+build/
+coverage/
+.turbo/
+*.tsbuildinfo
+next-env.d.ts
+
+# prisma generated client
+packages/db/src/generated/
+
+# go
+apps/worker/bin/
+*.exe
+*.test
+*.out
+
+# env — never commit secrets
+.env
+.env.*
+!.env.example
+
+# os / editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/*
+!.vscode/extensions.json
+*.log
