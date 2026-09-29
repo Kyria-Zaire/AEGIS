@@ -20,7 +20,9 @@ export default async function LoginPage() {
             await signIn("github", { redirectTo: "/dashboard" });
           }}
         >
-          <Button className="w-full" size="lg" type="submit">Se connecter avec GitHub</Button>
+          <Button className="w-full" size="lg" type="submit">
+            Se connecter avec GitHub
+          </Button>
         </form>
       </section>
     </main>

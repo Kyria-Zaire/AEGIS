@@ -15,7 +15,9 @@ export default async function InstallationsPage() {
     <main className="mx-auto max-w-6xl px-6 py-12">
       <h1 className="text-2xl font-semibold">Installations GitHub</h1>
       {installations.length === 0 ? (
-        <div className="mt-8 rounded-xl border border-dashed border-zinc-700 p-10 text-center text-zinc-400">Aucune installation connectée.</div>
+        <div className="mt-8 rounded-xl border border-dashed border-zinc-700 p-10 text-center text-zinc-400">
+          Aucune installation connectée.
+        </div>
       ) : (
         <ul className="mt-8 grid gap-3">
           {installations.map((installation) => (

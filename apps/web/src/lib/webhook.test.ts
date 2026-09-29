@@ -22,11 +22,16 @@ describe("processGithubWebhook", () => {
       repository: { upsert: repositoryUpsert },
     };
     const db = { $transaction: vi.fn(async (callback) => callback(tx)) } as unknown as PrismaClient;
-    const result = await processGithubWebhook("installation", "delivery-1", {
-      action: "created",
-      sender: { id: 7 },
-      installation: { id: 42, account: { id: 7, login: "acme", type: "Organization" } },
-    }, db);
+    const result = await processGithubWebhook(
+      "installation",
+      "delivery-1",
+      {
+        action: "created",
+        sender: { id: 7 },
+        installation: { id: 42, account: { id: 7, login: "acme", type: "Organization" } },
+      },
+      db,
+    );
     expect(result).toBe("processed");
     expect(tx.githubInstallation.upsert).toHaveBeenCalledOnce();
     expect(repositoryUpsert).toHaveBeenCalledOnce();
@@ -34,7 +39,11 @@ describe("processGithubWebhook", () => {
 
   it("treats a repeated delivery as a no-op", async () => {
     const duplicate = Object.assign(new Error("unique"), { code: "P2002" });
-    const db = { $transaction: vi.fn(async () => { throw duplicate; }) } as unknown as PrismaClient;
+    const db = {
+      $transaction: vi.fn(async () => {
+        throw duplicate;
+      }),
+    } as unknown as PrismaClient;
     await expect(processGithubWebhook("push", "delivery-1", {}, db)).resolves.toBe("duplicate");
   });
 });

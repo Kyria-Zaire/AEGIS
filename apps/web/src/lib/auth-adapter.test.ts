@@ -6,7 +6,12 @@ import { createAegisAdapter } from "./auth-adapter";
 
 describe("createAegisAdapter", () => {
   it("never passes OAuth tokens to Prisma linkAccount", async () => {
-    const create = vi.fn(async ({ data }) => ({ ...data, access_token: null, refresh_token: null, id_token: null }));
+    const create = vi.fn(async ({ data }) => ({
+      ...data,
+      access_token: null,
+      refresh_token: null,
+      id_token: null,
+    }));
     const db = { account: { create } } as unknown as PrismaClient;
     const adapter = createAegisAdapter(db);
     await adapter.linkAccount?.({
@@ -30,7 +35,13 @@ describe("createAegisAdapter", () => {
     const tx = { user: { create: userCreate }, organization: { create: organizationCreate } };
     const db = { $transaction: vi.fn(async (callback) => callback(tx)) } as unknown as PrismaClient;
     const adapter = createAegisAdapter(db);
-    await adapter.createUser?.({ id: "ignored", name: "Ada", email: "ada@example.com", emailVerified: null, image: null });
+    await adapter.createUser?.({
+      id: "ignored",
+      name: "Ada",
+      email: "ada@example.com",
+      emailVerified: null,
+      image: null,
+    });
     expect(organizationCreate).toHaveBeenCalledWith({
       data: {
         name: "Personal Workspace",

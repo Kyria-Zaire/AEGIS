@@ -170,7 +170,8 @@ export async function processGithubWebhook(
               repositoryId: repository.id,
               trigger: event === "push" ? "PUSH" : "PULL_REQUEST",
               commitSha,
-              branch: event === "push" ? payload.ref?.replace("refs/heads/", "") : payload.pull_request?.head.ref,
+              branch:
+                event === "push" ? payload.ref?.replace("refs/heads/", "") : payload.pull_request?.head.ref,
             },
           });
         }

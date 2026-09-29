@@ -17,7 +17,10 @@ export async function POST(request: Request): Promise<Response> {
     return Response.json({ ok: true, result });
   } catch (error) {
     // eslint-disable-next-line no-console -- operational error without payload, private key, or token
-    console.error("GitHub webhook processing failed", error instanceof Error ? error.message : "unknown error");
+    console.error(
+      "GitHub webhook processing failed",
+      error instanceof Error ? error.message : "unknown error",
+    );
     return Response.json({ error: "Webhook processing failed" }, { status: 500 });
   }
 }

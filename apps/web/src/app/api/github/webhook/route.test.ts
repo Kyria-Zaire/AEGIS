@@ -8,15 +8,20 @@ import { processGithubWebhook } from "@/lib/webhook";
 import { POST } from "./route";
 
 describe("GitHub webhook route", () => {
-  afterEach(() => { delete process.env.GITHUB_WEBHOOK_SECRET; vi.clearAllMocks(); });
+  afterEach(() => {
+    delete process.env.GITHUB_WEBHOOK_SECRET;
+    vi.clearAllMocks();
+  });
 
   it("returns 401 and performs no processing for an invalid signature", async () => {
     process.env.GITHUB_WEBHOOK_SECRET = "secret";
-    const response = await POST(new Request("http://localhost/api/github/webhook", {
-      method: "POST",
-      body: "{}",
-      headers: { "x-hub-signature-256": `sha256=${"0".repeat(64)}` },
-    }));
+    const response = await POST(
+      new Request("http://localhost/api/github/webhook", {
+        method: "POST",
+        body: "{}",
+        headers: { "x-hub-signature-256": `sha256=${"0".repeat(64)}` },
+      }),
+    );
     expect(response.status).toBe(401);
     expect(processGithubWebhook).not.toHaveBeenCalled();
   });
@@ -25,15 +30,17 @@ describe("GitHub webhook route", () => {
     process.env.GITHUB_WEBHOOK_SECRET = "secret";
     const body = '{"action":"created"}';
     const signature = `sha256=${createHmac("sha256", "secret").update(body).digest("hex")}`;
-    const response = await POST(new Request("http://localhost/api/github/webhook", {
-      method: "POST",
-      body,
-      headers: {
-        "x-hub-signature-256": signature,
-        "x-github-event": "installation",
-        "x-github-delivery": "delivery-1",
-      },
-    }));
+    const response = await POST(
+      new Request("http://localhost/api/github/webhook", {
+        method: "POST",
+        body,
+        headers: {
+          "x-hub-signature-256": signature,
+          "x-github-event": "installation",
+          "x-github-delivery": "delivery-1",
+        },
+      }),
+    );
     expect(response.status).toBe(200);
     expect(processGithubWebhook).toHaveBeenCalledWith("installation", "delivery-1", { action: "created" });
   });

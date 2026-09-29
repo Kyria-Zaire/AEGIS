@@ -4,8 +4,12 @@ import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import { verifyWebhookSignature } from "./github-app";
 
 describe("verifyWebhookSignature", () => {
-  beforeEach(() => { process.env.GITHUB_WEBHOOK_SECRET = "test-secret"; });
-  afterEach(() => { delete process.env.GITHUB_WEBHOOK_SECRET; });
+  beforeEach(() => {
+    process.env.GITHUB_WEBHOOK_SECRET = "test-secret";
+  });
+  afterEach(() => {
+    delete process.env.GITHUB_WEBHOOK_SECRET;
+  });
 
   it("accepts a valid signature", () => {
     const payload = '{"zen":"secure"}';

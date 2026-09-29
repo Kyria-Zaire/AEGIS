@@ -5,13 +5,15 @@ import { prisma, type PrismaClient } from "@aegis/db";
 
 /** Auth adapter with Aegis' tenant lifecycle and OAuth-token-at-rest policy. */
 export function createAegisAdapter(db?: PrismaClient): Adapter {
-  const client = db ?? new Proxy({} as PrismaClient, {
-    get: (_target, property) => {
-      // eslint-disable-next-line @typescript-eslint/unbound-method -- read only to bind Prisma methods below
-      const value = prisma()[property as keyof PrismaClient];
-      return typeof value === "function" ? value.bind(prisma()) : value;
-    },
-  });
+  const client =
+    db ??
+    new Proxy({} as PrismaClient, {
+      get: (_target, property) => {
+        // eslint-disable-next-line @typescript-eslint/unbound-method -- read only to bind Prisma methods below
+        const value = prisma()[property as keyof PrismaClient];
+        return typeof value === "function" ? value.bind(prisma()) : value;
+      },
+    });
   const base = PrismaAdapter(client as never);
 
   return {
