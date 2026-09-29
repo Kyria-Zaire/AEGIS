@@ -9,6 +9,12 @@ const compat = new FlatCompat({ baseDirectory: import.meta.dirname });
 const config = [
   ...compat.extends("next/core-web-vitals", "next/typescript"),
   ...baseConfig({ tsconfigRootDir: import.meta.dirname }),
+  {
+    // The generated Prisma client and @auth/prisma-adapter resolve differently on Windows and Linux:
+    // TypeScript requires this cast locally while Linux ESLint otherwise reports it as unnecessary.
+    files: ["src/lib/auth-adapter.ts"],
+    rules: { "@typescript-eslint/no-unnecessary-type-assertion": "off" },
+  },
 ];
 
 export default config;
