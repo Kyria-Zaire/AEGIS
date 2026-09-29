@@ -14,7 +14,7 @@ export function createAegisAdapter(db?: PrismaClient): Adapter {
         return typeof value === "function" ? value.bind(prisma()) : value;
       },
     });
-  const base = PrismaAdapter(client as never);
+  const base = PrismaAdapter(client as unknown as Parameters<typeof PrismaAdapter>[0]);
 
   return {
     ...base,
