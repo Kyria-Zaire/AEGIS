@@ -1,0 +1,10 @@
+{
+  "name": "@aegis/worker",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Go service — lint/test run through the Go toolchain (see CI), this file only wires it into `turbo dev/build`.",
+  "scripts": {
+    "dev": "go run ./cmd/worker",
+    "build": "go build -trimpath -o bin/worker ./cmd/worker"
+  }
+}

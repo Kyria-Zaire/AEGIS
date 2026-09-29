@@ -1,0 +1,10 @@
+// Connection URL lives in prisma.config.ts (Prisma 7). Business models to come.
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
