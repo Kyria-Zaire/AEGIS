@@ -1,5 +1,6 @@
 {
   "$schema": "https://turborepo.com/schema.json",
+  "agentGuidance": false,
   "ui": "tui",
   "globalDependencies": ["tsconfig.base.json", "eslint.config.base.js"],
   "globalEnv": ["NODE_ENV"],
